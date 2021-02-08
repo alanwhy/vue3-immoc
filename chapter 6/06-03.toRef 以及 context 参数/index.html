@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 36</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // toRef, context
+  const app = Vue.createApp({
+    methods: {
+      handleChange() {
+        alert('change');
+      }
+    },
+    template: `<child @change="handleChange">parent</child>`,
+    // setup(props, context) {
+    //   const { reactive, toRef } = Vue
+    //   const data = reactive({ name: 'dell' })
+    //   const age = toRef(data, 'age')
+    //   setTimeout(() => {
+    //     age.value = 'lee'
+    //   }, 2000);
+    //   return { age }
+    // }
+  });
+
+  app.component('child', {
+    template: '<div @click="handleClick">123123</div>',
+    setup(props, context) {
+      const { h } = Vue;
+      // 都是父组件传过来的东西
+      const { attrs, slots, emit } = context;
+      // attrs None-props
+      function handleClick() { emit('change'); }
+      // return () => { h('div', {}, slots.default()) }
+      return { handleClick }
+    }
+  })
+  const vm = app.mount('#root');
+</script>
+
+</html>
