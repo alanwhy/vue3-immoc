@@ -1,57 +1,59 @@
 <template>
   <div class="docker">
-    <div class="docker__item docker__item--active">
-      <div class="iconfont">&#xe6f3;</div>
-      <div class="docker__title">首页</div>
-    </div>
-    <div class="docker__item">
-      <div class="iconfont">&#xe7e5;</div>
-      <div class="docker__title">购物车</div>
-      </div>
-    <div class="docker__item">
-      <div class="iconfont">&#xe61e;</div>
-      <div class="docker__title">订单</div>
-    </div>
-    <div class="docker__item">
-      <div class="iconfont">&#xe660;</div>
-      <div class="docker__title">我的</div>
+    <div
+      v-for="(item, index) in dockerList"
+      :class="{ docker__item: true, 'docker__item--active': index === 0 }"
+      class="docker__item"
+      :key="item.icon"
+    >
+      <div class="iconfont" v-html="item.icon" />
+      <div class="docker__title">{{ item.text }}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Docker'
-}
+  name: "Docker",
+  setup() {
+    const dockerList = [
+      { icon: "&#xe6f3;", text: "首页" },
+      { icon: "&#xe7e5;", text: "购物车" },
+      { icon: "&#xe61e;", text: "订单" },
+      { icon: "&#xe660;", text: "我的" },
+    ];
+    return { dockerList };
+  },
+};
 </script>
 
 <style lang="scss">
-@import '../../style/viriables.scss';
+@import "../../style/viriables.scss";
 .docker {
   display: flex;
   box-sizing: border-box;
   position: absolute;
-  padding: 0 .18rem;
+  padding: 0 0.18rem;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: .49rem;
-  border-top: .01rem solid $content-bgColor;
+  height: 0.49rem;
+  border-top: 0.01rem solid $content-bgColor;
   color: $content-fontcolor;
   &__item {
     flex: 1;
     text-align: center;
     .iconfont {
-      margin: .07rem 0 .02rem 0;
-      font-size: .18rem;
+      margin: 0.07rem 0 0.02rem 0;
+      font-size: 0.18rem;
     }
     &--active {
-      color: #1FA4FC;
+      color: #1fa4fc;
     }
   }
   &__title {
-    font-size: .2rem;
-    transform: scale(.5, .5);
+    font-size: 0.2rem;
+    transform: scale(0.5, 0.5);
     transform-origin: center top;
   }
 }
