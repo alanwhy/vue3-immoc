@@ -26,14 +26,14 @@ export default {
     const nearbyList = [
       {
         id: 1,
-        imgUrl: "/img/near.png",
+        imgUrl: "./img/near.png",
         title: "沃尔玛",
         tags: ["月售1万+", "起送¥0", "基础运费¥5"],
         desc: "VIP尊享满89元减4元运费券（每月3张）",
       },
       {
         id: 2,
-        imgUrl: "/img/near.png",
+        imgUrl: "./img/near.png",
         title: "沃尔玛",
         tags: ["月售1万+", "起送¥5", "基础运费¥5"],
         desc: "VIP尊享满89元减4元运费券（每月3张）",

@@ -2,7 +2,7 @@
   <div class="wrapper">
     <img
       class="wrapper__img"
-      src="/img/user.png"
+      src="./../../../public/img/user.png"
     />
     <div class="wrapper__input">
       <input

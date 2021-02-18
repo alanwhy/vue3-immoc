@@ -9,13 +9,13 @@
     <span class="search__text">山姆会员商店优惠商品</span>
   </div>
   <div class="banner">
-    <img class="banner__img" src="/img/banner.jpg" />
+    <img class="banner__img" src="./../../../public/img/banner.jpg" />
   </div>
   <div class="icons">
     <div class="icons__item" v-for="item in iconsList" :key="item.desc">
       <img
         class="icons__item__img"
-        :src="`/img/${item.imgName}.png`"
+        :src="`./img/${item.imgName}.png`"
       />
       <p class="icons__item__desc">{{ item.desc }}</p>
     </div>
