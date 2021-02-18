@@ -1,9 +1,6 @@
 <template>
   <div class="wrapper">
-    <img
-      class="wrapper__img"
-      src="./../../../public/img/user.png"
-    />
+    <img class="wrapper__img" src="./../../../public/img/user.png" />
     <div class="wrapper__input">
       <input
         class="wrapper__input__content"
@@ -143,11 +140,11 @@ export default {
   &__register-button {
     margin: 0.32rem 0.4rem 0.16rem 0.4rem;
     line-height: 0.48rem;
-    background: #0091ff;
+    background: $btn-bgColor;
     box-shadow: 0 0.04rem 0.08rem 0 rgba(0, 145, 255, 0.32);
     border-radius: 0.04rem;
     border-radius: 0.04rem;
-    color: #fff;
+    color: $bgColor;
     font-size: 0.16rem;
     text-align: center;
   }
