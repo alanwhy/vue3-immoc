@@ -1,7 +1,26 @@
 <template>
+  <div class="mask" v-if="showChart" />
   <div class="cart">
-    <div class="product">
-      <div class="product__header"></div>
+    <div class="product" v-if="showChart">
+      <div class="product__header">
+        <div
+          class="product__header__all"
+          @click="() => setCartItemsChecked(shopId)"
+        >
+          <span
+            class="product__header__icon iconfont"
+            v-html="allChecked ? '&#xe652;' : '&#xe6f7;'"
+          >
+          </span>
+          全选
+        </div>
+        <div
+          class="product__header__clear"
+          @click="() => cleanCartProducts(shopId)"
+        >
+          清空购物车
+        </div>
+      </div>
       <template v-for="item in productList" :key="item._id">
         <div class="product__item" v-if="item.count > 0">
           <div
@@ -48,6 +67,7 @@
         <img
           src="http://www.dell-lee.com/imgs/vue3/basket.png"
           class="check__icon__img"
+          @click="handleCartShowChange"
         />
         <div class="check__icon__tag">{{ total }}</div>
       </div>
@@ -60,7 +80,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { useCommonCartEffect } from "./commonCartEffect";
@@ -97,6 +117,20 @@ const useCartEffect = (shopId) => {
     return count.toFixed(2);
   });
 
+  const allChecked = computed(() => {
+    const productList = cartList[shopId];
+    let result = true;
+    if (productList) {
+      for (let i in productList) {
+        const product = productList[i];
+        if (product.count > 0 && !product.check) {
+          result = false;
+        }
+      }
+    }
+    return result;
+  });
+
   const productList = computed(() => {
     const productList = cartList[shopId] || [];
     return productList;
@@ -106,12 +140,23 @@ const useCartEffect = (shopId) => {
     store.commit("changeCartItemChecked", { shopId, productId });
   };
 
+  const cleanCartProducts = (shopId) => {
+    store.commit("cleanCartProducts", { shopId });
+  };
+
+  const setCartItemsChecked = (shopId) => {
+    store.commit("setCartItemsChecked", { shopId });
+  };
+
   return {
     total,
     price,
     productList,
+    cleanCartProducts,
+    allChecked,
     changeCartItemInfo,
     changeCartItemChecked,
+    setCartItemsChecked,
   };
 };
 
@@ -120,20 +165,33 @@ export default {
   setup() {
     const route = useRoute();
     const shopId = route.params.id;
+    const showChart = ref(false);
+    const handleCartShowChange = () => {
+      showChart.value = !showChart.value;
+    };
+
     const {
       total,
       price,
       productList,
+      cleanCartProducts,
+      allChecked,
       changeCartItemInfo,
       changeCartItemChecked,
+      setCartItemsChecked,
     } = useCartEffect(shopId);
     return {
       total,
       price,
       shopId,
       productList,
+      cleanCartProducts,
       changeCartItemInfo,
       changeCartItemChecked,
+      allChecked,
+      setCartItemsChecked,
+      showChart,
+      handleCartShowChange,
     };
   },
 };
@@ -142,19 +200,47 @@ export default {
 <style lang="scss" scoped>
 @import "../../style/viriables.scss";
 @import "../../style/mixins.scss";
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
 .cart {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 2;
+  background: #fff;
 }
 .product {
   overflow-y: scroll;
   flex: 1;
   background: #fff;
   &__header {
-    height: 0.52rem;
+    display: flex;
+    line-height: 0.52rem;
     border-bottom: 1px solid #f1f1f1;
+    font-size: 0.14rem;
+    color: #333;
+    &__all {
+      width: 0.64rem;
+      margin-left: 0.18rem;
+    }
+    &__icon {
+      display: inline-block;
+      color: #0091ff;
+      font-size: 0.2rem;
+    }
+    &__clear {
+      flex: 1;
+      margin-right: 0.16rem;
+      text-align: right;
+    }
   }
   &__item {
     position: relative;
