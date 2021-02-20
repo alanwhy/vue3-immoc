@@ -26,46 +26,42 @@
           >
         </div>
       </div>
-      <template v-for="item in productList" :key="item._id">
-        <div class="product__item" v-if="item.count > 0">
-          <div
-            class="product__item__checked iconfont"
-            v-html="item.check ? '&#xe652;' : '&#xe667;'"
-            @click="() => changeCartItemChecked(shopId, item._id)"
-          />
-          <img class="product__item__img" :src="item.imgUrl" />
-          <div class="product__item__detail">
-            <h4 class="product__item__title">{{ item.name }}</h4>
-            <p class="product__item__price">
-              <span class="product__item__yen">&yen;</span>{{ item.price }}
-              <span class="product__item__origin"
-                >&yen;{{ item.oldPrice }}</span
-              >
-            </p>
-          </div>
-          <div class="product__number">
-            <span
-              class="product__number__minus"
-              @click="
-                () => {
-                  changeCartItemInfo(shopId, item._id, item, -1);
-                }
-              "
-              >-</span
-            >
-            {{ item.count || 0 }}
-            <span
-              class="product__number__plus"
-              @click="
-                () => {
-                  changeCartItemInfo(shopId, item._id, item, 1);
-                }
-              "
-              >+</span
-            >
-          </div>
+      <div v-for="item in productList" :key="item._id" class="product__item">
+        <div
+          class="product__item__checked iconfont"
+          v-html="item.check ? '&#xe652;' : '&#xe667;'"
+          @click="() => changeCartItemChecked(shopId, item._id)"
+        />
+        <img class="product__item__img" :src="item.imgUrl" />
+        <div class="product__item__detail">
+          <h4 class="product__item__title">{{ item.name }}</h4>
+          <p class="product__item__price">
+            <span class="product__item__yen">&yen;</span>{{ item.price }}
+            <span class="product__item__origin">&yen;{{ item.oldPrice }}</span>
+          </p>
         </div>
-      </template>
+        <div class="product__number">
+          <span
+            class="product__number__minus"
+            @click="
+              () => {
+                changeCartItemInfo(shopId, item._id, item, -1);
+              }
+            "
+            >-</span
+          >
+          {{ item.count || 0 }}
+          <span
+            class="product__number__plus"
+            @click="
+              () => {
+                changeCartItemInfo(shopId, item._id, item, 1);
+              }
+            "
+            >+</span
+          >
+        </div>
+      </div>
     </div>
     <div class="check">
       <div class="check__icon">
@@ -91,7 +87,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { useCommonCartEffect } from "../../effects/cartEffects";
@@ -99,28 +95,9 @@ import { useCommonCartEffect } from "../../effects/cartEffects";
 // 获取购物车信息逻辑
 const useCartEffect = (shopId) => {
   const store = useStore();
-  const { cartList, productList, changeCartItemInfo } = useCommonCartEffect(
+  const { productList, calculations, changeCartItemInfo } = useCommonCartEffect(
     shopId
   );
-
-  const calculations = computed(() => {
-    const productList = cartList[shopId]?.productList;
-    const result = { total: 0, price: 0, allChecked: true };
-    if (productList) {
-      for (let i in productList) {
-        const product = productList[i];
-        result.total += product.count;
-        if (product.check) {
-          result.price += product.count * product.price;
-        }
-        if (product.count > 0 && !product.check) {
-          result.allChecked = false;
-        }
-      }
-    }
-    result.price = result.price.toFixed(2);
-    return result;
-  });
 
   const changeCartItemChecked = (shopId, productId) => {
     store.commit("changeCartItemChecked", { shopId, productId });
