@@ -1,20 +1,20 @@
 <template>
-  <div class="cart">
-    <div>作业部分代码，同学尝试实现</div>
-    <Docker :currentIndex="1"></Docker>
+  <div class="mine">
+    <div>开发中...</div>
+    <Docker :currentIndex="3"></Docker>
   </div>
 </template>
 
 <script>
 import Docker from "./../../components/Docker";
 export default {
-  name: "CartList",
+  name: "Mine",
   components: { Docker },
 };
 </script>
 
 <style lang="scss" scoped>
-.cart {
+.mine {
   margin-top: 0.2rem;
   text-align: center;
 }
