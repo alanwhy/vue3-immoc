@@ -77,7 +77,7 @@
           >&yen; {{ calculations.price }}</span
         >
       </div>
-      <div class="check__btn">
+      <div class="check__btn" v-show="calculations.total > 0">
         <router-link :to="{ path: `/orderConfirmation/${shopId}` }">
           去结算
         </router-link>
