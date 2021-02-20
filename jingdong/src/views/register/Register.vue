@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper">
-    <img class="wrapper__img" src="http://www.dell-lee.com/imgs/vue3/user.png" />
+    <img
+      class="wrapper__img"
+      src="http://www.dell-lee.com/imgs/vue3/user.png"
+    />
     <div class="wrapper__input">
       <input
         class="wrapper__input__content"
@@ -125,7 +128,8 @@ export default {
     border-radius: 6px;
     border-radius: 6px;
     &__content {
-      line-height: 0.48rem;
+      margin-top: 0.12rem;
+      line-height: 0.22rem;
       border: none;
       outline: none;
       width: 100%;

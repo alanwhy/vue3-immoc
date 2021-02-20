@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper">
-    <img class="wrapper__img" src="http://www.dell-lee.com/imgs/vue3/user.png" />
+    <img
+      class="wrapper__img"
+      src="http://www.dell-lee.com/imgs/vue3/user.png"
+    />
     <div class="wrapper__input">
       <input
         class="wrapper__input__content"
@@ -108,7 +111,8 @@ export default {
     border-radius: 6px;
     border-radius: 6px;
     &__content {
-      line-height: 0.48rem;
+      margin-top: 0.12rem;
+      line-height: 0.22rem;
       border: none;
       outline: none;
       width: 100%;
@@ -123,7 +127,7 @@ export default {
   &__login-button {
     margin: 0.32rem 0.4rem 0.16rem 0.4rem;
     line-height: 0.48rem;
-    background: $btn-bgColor;
+    background: #0091ff;
     box-shadow: 0 0.04rem 0.08rem 0 rgba(0, 145, 255, 0.32);
     border-radius: 0.04rem;
     border-radius: 0.04rem;
